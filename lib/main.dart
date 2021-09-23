@@ -20,9 +20,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'TableCalendar Example',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.redAccent,
+        primarySwatch: Colors.red,
       ),
-      home: StartPage(),
+      home: TableEventsExample(),
     );
   }
 }
