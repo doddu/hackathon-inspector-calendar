@@ -1,2 +1,4 @@
-# hackathon-inspector-calendar
-Inspectors can view their allocations in calendar view
+# Hackathon Client Inspection Calendar
+
+## Getting Started
+
