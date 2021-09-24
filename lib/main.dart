@@ -3,6 +3,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'pages/basics_example.dart';
 import 'pages/complex_example.dart';
@@ -11,10 +13,13 @@ import 'pages/multi_example.dart';
 import 'pages/range_example.dart';
 
 void main() {
-  initializeDateFormatting().then((_) => runApp(MyApp()));
+  initializeDateFormatting().then((_) => {
+    runApp(MyApp())
+  });
 }
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,7 +28,16 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.redAccent,
         primarySwatch: Colors.red,
       ),
-      home: TableEventsExample(),
+      // home: TableEventsExample()
+      home: AnimatedSplashScreen(
+          duration: 500,
+          splash: 'assets/qima@2x.png',
+          nextScreen: TableEventsExample(),
+          splashTransition: SplashTransition.fadeTransition,
+          pageTransitionType: PageTransitionType.rightToLeft,
+          backgroundColor: Color(0XFF031636),
+        // backgroundColor: Colors.redAccent,
+      )
     );
   }
 }

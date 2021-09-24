@@ -8,6 +8,7 @@ import "package:collection/collection.dart";
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:http/http.dart' as http;
 
@@ -55,7 +56,16 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
       // return Album.fromJson(jsonDecode(response.body));
 
-      List<Event> events = List.from(orders.map((item) => new Event(item['orderNumber'], item['inspectionDate'])));
+      List<Event> events = List.from(orders.map((item) => Event(
+          item['orderNumber'],
+          item['inspectionDate'],
+          item['companyName'],
+          item['productName'],
+          item['supplierName'],
+          item['factoryCity'] + ', ' + item['factoryCountry'],
+          item['allInspectors']
+      )));
+
 
       _eventsByDates = groupBy(events, (e) => e.inspectionDate);
 
@@ -192,7 +202,15 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           child: ListTile(
-                            onTap: () => print('${value[index]}'),
+                            onTap: () => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) => InspectionDetailDialog(inspection: value[index]),
+                                  fullscreenDialog: true,
+                                ),
+                              )
+                            },
                             title: Text('${value[index]}'),
                           ),
                         );
@@ -206,5 +224,57 @@ class _TableEventsExampleState extends State<TableEventsExample> {
         );
     //   }
     // );
+  }
+}
+
+class InspectionDetailDialog extends StatelessWidget {
+
+  final Event inspection;
+  InspectionDetailDialog({required this.inspection});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        // backgroundColor: Color(0xFF6200EE),
+        title: Text('Inspection Detail'),
+      ),
+      body: ListView(
+        children: <Widget>[
+          ListTile(
+            leading: Icon(Icons.fact_check),
+            title: Text('${inspection.title}'),
+          ),
+          ListTile(
+            leading: Icon(Icons.shopping_cart),
+            title: Text('${inspection.productName}'),
+          ),
+          ListTile(
+            leading: Icon(Icons.date_range),
+            title: Text('${inspection.inspectionDate}'),
+          ),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('${inspection.companyName}'),
+          ),
+          ListTile(
+            leading: Icon(Icons.location_city),
+            title: Text('${inspection.supplierName}'),
+          ),
+          ListTile(
+            leading: Icon(Icons.map),
+            title: Text('${inspection.supplierAddress}', style: TextStyle(decoration: TextDecoration.underline, color: Color(0XFF031636))),
+            onTap: () => {
+              MapsLauncher.launchQuery(inspection.supplierAddress)
+            }
+          ),
+          ListTile(
+            leading: Icon(Icons.supervisor_account),
+            title: Text('${inspection.allInspectors}'),
+          ),
+
+        ],
+      ),
+    );
   }
 }

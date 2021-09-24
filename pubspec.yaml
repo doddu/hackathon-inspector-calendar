@@ -36,6 +36,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   table_calendar: ^3.0.2
   http: ^0.13.3
+  maps_launcher: ^2.0.1
+  animated_splash_screen: ^1.1.0
+  flutter_launcher_icons: ^0.9.2
+
+flutter_icons:
+  image_path: "assets/qimalogo.png"
+  android: true
+  ios: true
 
 dev_dependencies:
   flutter_test:
@@ -60,7 +68,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - assets/qima@2x.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
